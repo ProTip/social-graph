@@ -24,17 +24,20 @@ class Graph:
       raise NodeDoesNotExist('Node request for non-existent id [' + str(id) + ']')
 
   def viewer_total(self, id):
-    visited = set()
-    stack = []
+    total = [0]
+    def addTotal(node):
+      total[0] += node.followers
+    self.traverse_from(id, addTotal)
+    return total[0]
 
+  def traverse_from(self, id, func):
+    visited = set()
     startNode = self.get_node_by_id(id)
-    total = startNode.followers
-    stack += startNode.children
+    stack = [startNode]
     while stack:
       node = stack.pop()
-      total += node.followers
       stack += node.children
-    return total
+      func(node)
 
 class Node:
   def __init__(self, postId, repostId, followers):

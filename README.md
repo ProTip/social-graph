@@ -6,7 +6,7 @@ Because it said so in the instructions. No visited protection based on this, nor
 nodes visited.
 
 **Nodes are listed in CSV in order of dependency**</br>
-No support for broken graphs.. No error handling at all.
+No support for broken graphs..
 
 ## Run
 
