@@ -72,9 +72,8 @@ class GraphFactory:
                 postId = int(row[0])
                 repostId = int(row[1])
                 followers = int(row[2])
-
                 graph.add_node(postId, repostId, followers)
-    return graph
+        return graph
 
 
 # Raised when trying to add duplicate nodes
