@@ -25,4 +25,9 @@ class TestArrayDiff(unittest.TestCase):
     graph.add_node(1,-1,0)
     self.assertRaises(social.NodeDoesNotExist, graph.viewer_total, 100)
 
+  def test_add_node_throws_on_missing_parent(self):
+    graph = social.Graph()
+    graph.add_node(1,-1,0)
+    self.assertRaises(social.NodeDoesNotExist, graph.add_node, 2, 5, 0)
+
 unittest.main()

@@ -13,7 +13,7 @@ class Graph:
     self.node_index[postId] = node
     # Attach to parent
     if (node.repostId > -1):
-      parent = self.node_index[node.repostId]
+      parent = self.get_node_by_id(node.repostId)
       parent.add_child(node)
 
 
