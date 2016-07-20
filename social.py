@@ -6,6 +6,9 @@ class Graph:
     self.node_index = {}
 
   def add_node(self, postId, repostId, followers):
+    if postId in self.node_index:
+      raise NodeExists('Node already with postId [' + str(postId) + ']')
+
     node = Node(postId, repostId, followers)
     self.node_index[postId] = node
     # Attach to parent
@@ -13,18 +16,18 @@ class Graph:
       parent = self.node_index[node.repostId]
       parent.add_child(node)
 
-  def print_nodes(self):
-    print(self.node_index)
-    print(self.nodes)
 
   def get_node_by_id(self, id):
-    return self.node_index[id]
+    try:
+      return self.node_index[id]
+    except Exception:
+      raise NodeDoesNotExist('Node request for non-existent id [' + str(id) + ']')
 
   def viewer_total(self, id):
     visited = set()
     stack = []
 
-    startNode = self.node_index[id]
+    startNode = self.get_node_by_id(id)
     total = startNode.followers
     stack += startNode.children
     while stack:
@@ -63,3 +66,11 @@ class GraphFactory:
 
         graph.add_node(postId, repostId, followers)
     return graph
+
+# Raised when trying to add duplicate nodes
+class NodeExists(Exception):
+  pass
+
+# Raised when trying run aggregates or lookups on nodes that do not exist
+class NodeDoesNotExist(Exception):
+  pass
